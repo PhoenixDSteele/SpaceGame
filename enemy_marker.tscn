@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4ikpeh8nif86"]
+
+[sub_resource type="GDScript" id="GDScript_oesu3"]
+script/source = "extends Marker3D
+
+"
+
+[node name="EnemyMarker" type="Marker3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = SubResource("GDScript_oesu3")

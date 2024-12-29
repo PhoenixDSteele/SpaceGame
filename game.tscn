@@ -1,0 +1,161 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqilkr8ndr7i4"]
+
+[ext_resource type="PackedScene" uid="uid://cr7a4kxegodb6" path="res://entities/player_ship.tscn" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://kq0fr5sniqe4" path="res://entities/enemy_ship.tscn" id="2_e2o6t"]
+[ext_resource type="Script" path="res://entry_carriage.gd" id="2_feb5d"]
+[ext_resource type="Script" path="res://formation.gd" id="3_6gmqk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80nbo"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_e2o6t"]
+sky_material = SubResource("ProceduralSkyMaterial_80nbo")
+
+[sub_resource type="Environment" id="Environment_feb5d"]
+background_mode = 2
+sky = SubResource("Sky_e2o6t")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Curve3D" id="Curve3D_mwb40"]
+_data = {
+"points": PackedVector3Array(-1.94523, 0, 0.188818, 1.94523, 0, -0.188818, -8.06898, 0, -0.433459, -1.03957, 0, 1.08528, 1.03957, 0, -1.08528, -3.60733, 0, -2.31866, -0.269035, 0, 1.34792, 0.269035, 0, -1.34792, -1.62786, 0, -6.43469, 0.706148, 0, 1.10963, -0.706148, 0, -1.10963, -1.5336, 0, -10.2365, 0.882715, 0, 0.356482, -0.882715, 0, -0.356482, -3.83208, 0, -11.9108, 0.876906, 0, -0.931164, -0.876906, 0, 0.931164, -6.74602, 0, -11.2173, -0.780676, 0, -0.712146, 0.780676, 0, 0.712146, -6.51436, 0, -7.82062, -0.831789, 0, 0.322531, 0.831789, 0, -0.322531, -4.03578, 0, -7.03894, -0.316594, 0, 0.823994, 0.316594, 0, -0.823994, -2.27629, 0, -9.01725, 0.118451, 0, 0.932895, -0.118451, 0, -0.932895, -1.77769, 0, -12.657, 0, 0, 0, 0, 0, 0, -2.72503, 0, -18.4906),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 11
+
+[sub_resource type="Curve3D" id="Curve3D_u18c4"]
+_data = {
+"points": PackedVector3Array(2.42603, 0, 0.64364, -2.42603, 0, -0.64364, 7.99958, 0, -0.492952, 1.03973, 0, 1.48532, -1.03973, 0, -1.48532, 3.54362, 0, -3.26555, -0.0990219, 0, 1.98043, 0.0990219, 0, -1.98043, 1.90977, 0, -8.21662, -1.08924, 0, 0.445598, 1.08924, 0, -0.445598, 3.34558, 0, -13.0192, -0.643639, 0, -0.841682, 0.643639, 0, 0.841682, 6.41524, 0, -12.6231, 0.940704, 0, -0.69315, -0.940704, 0, 0.69315, 6.5, 0, -9, 1.08923, 0, 0.643639, -1.08923, 0, -0.643639, 3.49411, 0, -9.15732, 0.297062, 0, 1.68336, -0.297062, 0, -1.68336, 1.51368, 0, -12.7221, -0.396084, 0, 1.23777, 0.396084, 0, -1.23777, 1.95928, 0, -18.1683),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 9
+
+[node name="Game" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.680796, -0.0313587, 0.731801, 0.535272, 0.660694, 0.526277, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_feb5d")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.403561, 0.914953, 0, -0.914953, 0.403561, 0, 13.8266, -1.82858)
+size = 24.2598
+far = 150.0
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_80nbo")]
+left_bound = -4.0
+right_bound = 4.0
+
+[node name="InRouteBottomLeft" type="Path3D" parent="."]
+curve = SubResource("Curve3D_mwb40")
+
+[node name="EntryCarriage" type="PathFollow3D" parent="InRouteBottomLeft"]
+transform = Transform3D(0.0966115, 0, -0.995304, 0, 1, 0, 0.995304, 0, 0.0966115, -8.06898, 0, -0.433459)
+loop = false
+script = ExtResource("2_feb5d")
+speed = 10.0
+
+[node name="InRouteBottomRight" type="Path3D" parent="."]
+curve = SubResource("Curve3D_u18c4")
+
+[node name="EntryCarriage" type="PathFollow3D" parent="InRouteBottomRight"]
+transform = Transform3D(0.256434, 0, 0.966561, 0, 1, 0, -0.966561, 0, 0.256434, 7.99958, 0, -0.492952)
+loop = false
+script = ExtResource("2_feb5d")
+speed = 10.0
+
+[node name="Formation" type="Node" parent="." node_paths=PackedStringArray("left_subgroups", "left_paths", "right_subgroups", "right_paths")]
+script = ExtResource("3_6gmqk")
+enemy_ship = ExtResource("2_e2o6t")
+left_subgroups = [NodePath("SubGroup"), NodePath("SubGroup3")]
+left_paths = [NodePath("../InRouteBottomLeft/EntryCarriage")]
+right_subgroups = [NodePath("SubGroup2"), NodePath("SubGroup4")]
+right_paths = [NodePath("../InRouteBottomRight/EntryCarriage")]
+
+[node name="SubGroup" type="Node3D" parent="Formation"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -22.5)
+
+[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -4)
+
+[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -2.5)
+
+[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -1)
+
+[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -4)
+
+[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -2.5)
+
+[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -1)
+
+[node name="SubGroup3" type="Node3D" parent="Formation"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.5, 0, -19.5)
+
+[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 1.5)
+
+[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 3)
+
+[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 4.5)
+
+[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 1.5)
+
+[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 3)
+
+[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 4.5)
+
+[node name="SubGroup2" type="Node3D" parent="Formation"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -23)
+
+[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
+
+[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
+
+[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
+
+[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 1.5)
+
+[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 3)
+
+[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 4.5)
+
+[node name="SubGroup4" type="Node3D" parent="Formation"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -20)
+
+[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
+
+[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
+
+[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
+
+[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 1.5)
+
+[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 3)
+
+[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 4.5)

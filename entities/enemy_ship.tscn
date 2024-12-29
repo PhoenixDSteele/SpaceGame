@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://kq0fr5sniqe4"]
+
+[ext_resource type="Script" path="res://entities/enemy_ship.gd" id="1_8d6bn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8d6bn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lpl25"]
+
+[node name="EnemyShip" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_8d6bn")
+move_speed = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_8d6bn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_lpl25")

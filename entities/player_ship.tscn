@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cr7a4kxegodb6"]
+
+[ext_resource type="Script" path="res://entities/player_ship.gd" id="1_7b8u1"]
+[ext_resource type="PackedScene" uid="uid://c7rwj0nmdbssy" path="res://entities/bullet.tscn" id="2_0bjly"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mwb40"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mwb40"]
+
+[node name="PlayerShip" type="Node3D"]
+script = ExtResource("1_7b8u1")
+bullet = ExtResource("2_0bjly")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_mwb40")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_mwb40")
+
+[node name="BulletSpawner" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

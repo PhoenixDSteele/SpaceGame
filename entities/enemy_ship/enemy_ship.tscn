@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://kq0fr5sniqe4"]
 
-[ext_resource type="Script" path="res://entities/enemy_ship.gd" id="1_8d6bn"]
+[ext_resource type="Script" path="res://entities/enemy_ship/enemy_ship.gd" id="1_8d6bn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_8d6bn"]
 

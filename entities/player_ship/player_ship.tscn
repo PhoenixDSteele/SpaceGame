@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cr7a4kxegodb6"]
 
-[ext_resource type="Script" path="res://entities/player_ship.gd" id="1_7b8u1"]
-[ext_resource type="PackedScene" uid="uid://c7rwj0nmdbssy" path="res://entities/bullet.tscn" id="2_0bjly"]
+[ext_resource type="Script" path="res://entities/player_ship/player_ship.gd" id="1_7b8u1"]
+[ext_resource type="PackedScene" uid="uid://c7rwj0nmdbssy" path="res://entities/bullet/bullet.tscn" id="2_0bjly"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mwb40"]
 

@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://cqilkr8ndr7i4"]
 
-[ext_resource type="PackedScene" uid="uid://cr7a4kxegodb6" path="res://entities/player_ship.tscn" id="1_80nbo"]
-[ext_resource type="PackedScene" uid="uid://kq0fr5sniqe4" path="res://entities/enemy_ship.tscn" id="2_e2o6t"]
-[ext_resource type="Script" path="res://entry_carriage.gd" id="2_feb5d"]
-[ext_resource type="Script" path="res://formation.gd" id="3_6gmqk"]
+[ext_resource type="PackedScene" uid="uid://cr7a4kxegodb6" path="res://entities/player_ship/player_ship.tscn" id="2_ghh2v"]
+[ext_resource type="Script" path="res://scripts/spawn_path.gd" id="2_rq40f"]
+[ext_resource type="Script" path="res://scripts/enemy_spawner.gd" id="3_6gmqk"]
+[ext_resource type="PackedScene" uid="uid://kq0fr5sniqe4" path="res://entities/enemy_ship/enemy_ship.tscn" id="4_mqimk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80nbo"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -42,120 +42,108 @@ shadow_enabled = true
 environment = SubResource("Environment_feb5d")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.403561, 0.914953, 0, -0.914953, 0.403561, 0, 13.8266, -1.82858)
+transform = Transform3D(1, 0, 0, 0, 0.403561, 0.914953, 0, -0.914953, 0.403561, 0, 13.8266, -2.23806)
 size = 24.2598
 far = 150.0
 
-[node name="PlayerShip" parent="." instance=ExtResource("1_80nbo")]
-left_bound = -4.0
-right_bound = 4.0
-
 [node name="InRouteBottomLeft" type="Path3D" parent="."]
 curve = SubResource("Curve3D_mwb40")
-
-[node name="EntryCarriage" type="PathFollow3D" parent="InRouteBottomLeft"]
-transform = Transform3D(0.0966115, 0, -0.995304, 0, 1, 0, 0.995304, 0, 0.0966115, -8.06898, 0, -0.433459)
-loop = false
-script = ExtResource("2_feb5d")
-speed = 10.0
+script = ExtResource("2_rq40f")
 
 [node name="InRouteBottomRight" type="Path3D" parent="."]
 curve = SubResource("Curve3D_u18c4")
+script = ExtResource("2_rq40f")
 
-[node name="EntryCarriage" type="PathFollow3D" parent="InRouteBottomRight"]
-transform = Transform3D(0.256434, 0, 0.966561, 0, 1, 0, -0.966561, 0, 0.256434, 7.99958, 0, -0.492952)
-loop = false
-script = ExtResource("2_feb5d")
-speed = 10.0
+[node name="PlayerShip" parent="." instance=ExtResource("2_ghh2v")]
 
-[node name="Formation" type="Node" parent="." node_paths=PackedStringArray("left_subgroups", "left_paths", "right_subgroups", "right_paths")]
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("left_subgroups", "left_paths", "right_subgroups", "right_paths")]
 script = ExtResource("3_6gmqk")
-enemy_ship = ExtResource("2_e2o6t")
+enemy_ship = ExtResource("4_mqimk")
 left_subgroups = [NodePath("SubGroup"), NodePath("SubGroup3")]
-left_paths = [NodePath("../InRouteBottomLeft/EntryCarriage")]
+left_paths = [NodePath("../InRouteBottomLeft")]
 right_subgroups = [NodePath("SubGroup2"), NodePath("SubGroup4")]
-right_paths = [NodePath("../InRouteBottomRight/EntryCarriage")]
+right_paths = [NodePath("../InRouteBottomRight")]
 
-[node name="SubGroup" type="Node3D" parent="Formation"]
+[node name="SubGroup" type="Node3D" parent="EnemySpawner"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -22.5)
 
-[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -4)
-
-[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -2.5)
-
-[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -1)
-
-[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup"]
+[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -4)
 
-[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup"]
+[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -4)
+
+[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -2.5)
 
-[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup"]
+[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -2.5)
+
+[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -1)
 
-[node name="SubGroup3" type="Node3D" parent="Formation"]
+[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -1)
+
+[node name="SubGroup3" type="Node3D" parent="EnemySpawner"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.5, 0, -19.5)
 
-[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup3"]
+[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 1.5)
 
-[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup3"]
+[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 3)
 
-[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup3"]
+[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 4.5)
 
-[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup3"]
+[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 1.5)
 
-[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup3"]
+[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 3)
 
-[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup3"]
+[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup3"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 4.5)
 
-[node name="SubGroup2" type="Node3D" parent="Formation"]
+[node name="SubGroup2" type="Node3D" parent="EnemySpawner"]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -23)
 
-[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
-
-[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
-
-[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
-
-[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup2"]
+[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup2"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 1.5)
 
-[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup2"]
+[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
+
+[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup2"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 3)
 
-[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup2"]
+[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
+
+[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup2"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 4.5)
 
-[node name="SubGroup4" type="Node3D" parent="Formation"]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -20)
-
-[node name="Marker3D3" type="Marker3D" parent="Formation/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
-
-[node name="Marker3D4" type="Marker3D" parent="Formation/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
-
-[node name="Marker3D5" type="Marker3D" parent="Formation/SubGroup4"]
+[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup2"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
 
-[node name="Marker3D13" type="Marker3D" parent="Formation/SubGroup4"]
+[node name="SubGroup4" type="Node3D" parent="EnemySpawner"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -20)
+
+[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
+
+[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
+
+[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
+
+[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup4"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 1.5)
 
-[node name="Marker3D14" type="Marker3D" parent="Formation/SubGroup4"]
+[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup4"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 3)
 
-[node name="Marker3D15" type="Marker3D" parent="Formation/SubGroup4"]
+[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup4"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 4.5)

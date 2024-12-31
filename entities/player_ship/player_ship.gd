@@ -6,8 +6,8 @@ var shoot_timer: float = 0
 
 @export var bullet: PackedScene
 
-@export var left_bound: float
-@export var right_bound: float
+@export var left_bound: float = -4.0
+@export var right_bound: float = 4.0
 
 func _process(delta: float) -> void:
 	var input: float = Input.get_axis("move_left", "move_right")

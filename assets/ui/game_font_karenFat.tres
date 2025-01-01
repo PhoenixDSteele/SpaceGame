@@ -1,0 +1,5 @@
+[gd_resource type="SystemFont" format=3 uid="uid://bswj6ny0fo5nx"]
+
+[resource]
+font_names = PackedStringArray("KarenFat")
+oversampling = 10.0

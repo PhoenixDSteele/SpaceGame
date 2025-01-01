@@ -13,3 +13,12 @@ config_version=5
 config/name="Space Game"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://core/audio_manager/default_bus_layout.tres"
+
+[autoload]
+
+AudioManager="*res://core/audio_manager/audio_manager.tscn"
+SceneLoader="*res://core/scene_loader/scene_loader.tscn"

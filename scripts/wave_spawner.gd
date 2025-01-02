@@ -24,7 +24,7 @@ var next_formation_idx: int = 0
 var can_spawn_next_formation: bool = true
 
 func _ready() -> void:
-	_start_next_wave()
+	_start_next_wave(2.0)
 
 func _process(delta: float) -> void:
 	timer -= delta
@@ -55,6 +55,8 @@ func _process(delta: float) -> void:
 				_spawn_formation(formation, left_path, right_path)
 				can_spawn_next_formation = false
 				next_formation_idx += 1
+		WaveState.Attack:
+			pass
 
 func _spawn_formation(formation: Formation, left_path: SpawnPath, right_path: SpawnPath) -> void:
 	print("spawning formation %s" % formation.name)
@@ -76,15 +78,15 @@ func _on_formation_eliminated() -> void:
 			any_formation_alive = true
 	
 	if not any_formation_alive:
-		_start_next_wave()
+		_start_next_wave(1.5)
 
-func _start_next_wave() -> void:
+func _start_next_wave(delay: float) -> void:
 	print("starting new wave!")
 	wave_counter += 1
 	new_wave.emit(wave_counter)
 	next_formation_idx = 0
 	can_spawn_next_formation = true
-	timer = 3.0
+	timer = delay
 	
 	state = WaveState.Spawn
 	

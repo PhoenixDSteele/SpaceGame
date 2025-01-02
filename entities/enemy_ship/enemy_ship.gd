@@ -1,20 +1,31 @@
 class_name EnemyShip
 extends Area3D
 
+signal dead(enemy: EnemyShip)
+signal state_changed(old_state: MoveMode, new_state: MoveMode)
+
 enum MoveMode {
 	EntryPath, JoinGroup, FollowGroup, Attack1, Attack2
 }
 
-var mode: MoveMode
+var mode: MoveMode:
+	set(v):
+		var old_mode: MoveMode = mode
+		mode = v
+		if old_mode != mode and mode != MoveMode.EntryPath:
+			state_changed.emit(old_mode, mode)
 
 var spawn_path: SpawnPath
 var horizontal_offset: float
 var path_delay: float
-var group_slot: Node3D
+var group_slot: EnemyPosition
 
 @export var move_speed: float = 5.0
 
 @export var hitpoints: int = 2
+
+func _ready() -> void:
+	position = Vector3(0, 0, 10000)
 
 func _process(delta: float) -> void:
 	match mode:
@@ -39,4 +50,5 @@ func _process(delta: float) -> void:
 func damage() -> void:
 	hitpoints -= 1
 	if hitpoints <= 0:
+		dead.emit(self)
 		queue_free()

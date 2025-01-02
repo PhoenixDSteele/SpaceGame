@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqilkr8ndr7i4"]
+[gd_scene load_steps=15 format=3 uid="uid://b18bg8cf5h5yh"]
 
 [ext_resource type="PackedScene" uid="uid://cr7a4kxegodb6" path="res://entities/player_ship/player_ship.tscn" id="2_ghh2v"]
 [ext_resource type="Script" path="res://scripts/spawn_path.gd" id="2_rq40f"]
-[ext_resource type="Script" path="res://scripts/enemy_spawner.gd" id="3_6gmqk"]
+[ext_resource type="Script" path="res://scripts/wave_spawner.gd" id="3_6gmqk"]
 [ext_resource type="PackedScene" uid="uid://kq0fr5sniqe4" path="res://entities/enemy_ship/enemy_ship.tscn" id="4_mqimk"]
+[ext_resource type="Script" path="res://scripts/formation.gd" id="5_io1ng"]
+[ext_resource type="Script" path="res://scripts/enemy_position.gd" id="6_vtjwi"]
+[ext_resource type="Script" path="res://wave_label.gd" id="7_8igea"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80nbo"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -20,17 +23,31 @@ glow_enabled = true
 
 [sub_resource type="Curve3D" id="Curve3D_mwb40"]
 _data = {
-"points": PackedVector3Array(-1.94523, 0, 0.188818, 1.94523, 0, -0.188818, -8.06898, 0, -0.433459, -1.03957, 0, 1.08528, 1.03957, 0, -1.08528, -3.60733, 0, -2.31866, -0.269035, 0, 1.34792, 0.269035, 0, -1.34792, -1.62786, 0, -6.43469, 0.706148, 0, 1.10963, -0.706148, 0, -1.10963, -1.5336, 0, -10.2365, 0.882715, 0, 0.356482, -0.882715, 0, -0.356482, -3.83208, 0, -11.9108, 0.876906, 0, -0.931164, -0.876906, 0, 0.931164, -6.74602, 0, -11.2173, -0.780676, 0, -0.712146, 0.780676, 0, 0.712146, -6.51436, 0, -7.82062, -0.831789, 0, 0.322531, 0.831789, 0, -0.322531, -4.03578, 0, -7.03894, -0.316594, 0, 0.823994, 0.316594, 0, -0.823994, -2.27629, 0, -9.01725, 0.118451, 0, 0.932895, -0.118451, 0, -0.932895, -1.77769, 0, -12.657, 0, 0, 0, 0, 0, 0, -2.72503, 0, -18.4906),
+"points": PackedVector3Array(-1.94523, 0, 0.188818, 1.94523, 0, -0.188818, -8.87968, 0, -3.77599, -1.06125, 0, 0.671257, 1.06125, 0, -0.671257, -3.51331, 0, -4.86798, -0.436798, 0, 1.24799, 0.436798, 0, -1.24799, -1.61013, 0, -6.92716, 0.706148, 0, 1.10963, -0.706148, 0, -1.10963, -1.5336, 0, -10.2365, 0.882715, 0, 0.356482, -0.882715, 0, -0.356482, -3.83208, 0, -11.9108, 0.876906, 0, -0.931164, -0.876906, 0, 0.931164, -6.74602, 0, -11.2173, -0.780676, 0, -0.712146, 0.780676, 0, 0.712146, -6.51436, 0, -7.82062, -0.831789, 0, 0.322531, 0.831789, 0, -0.322531, -4.03578, 0, -7.03894, -0.316594, 0, 0.823994, 0.316594, 0, -0.823994, -2.27629, 0, -9.01725, 0.118451, 0, 0.932895, -0.118451, 0, -0.932895, -1.77769, 0, -12.657, 0, 0, 0, 0, 0, 0, -2.17176, 0, -16.7012),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 11
 
 [sub_resource type="Curve3D" id="Curve3D_u18c4"]
 _data = {
-"points": PackedVector3Array(2.42603, 0, 0.64364, -2.42603, 0, -0.64364, 7.99958, 0, -0.492952, 1.03973, 0, 1.48532, -1.03973, 0, -1.48532, 3.54362, 0, -3.26555, -0.0990219, 0, 1.98043, 0.0990219, 0, -1.98043, 1.90977, 0, -8.21662, -1.08924, 0, 0.445598, 1.08924, 0, -0.445598, 3.34558, 0, -13.0192, -0.643639, 0, -0.841682, 0.643639, 0, 0.841682, 6.41524, 0, -12.6231, 0.940704, 0, -0.69315, -0.940704, 0, 0.69315, 6.5, 0, -9, 1.08923, 0, 0.643639, -1.08923, 0, -0.643639, 3.49411, 0, -9.15732, 0.297062, 0, 1.68336, -0.297062, 0, -1.68336, 1.51368, 0, -12.7221, -0.396084, 0, 1.23777, 0.396084, 0, -1.23777, 1.95928, 0, -18.1683),
+"points": PackedVector3Array(2.43358, 0, -0.0623999, -2.43358, 0, 0.0623999, 9.02901, 0, -3.93198, 1.15439, 0, 0.967194, -1.15439, 0, -0.967194, 3.47544, 0, -5.11758, 0.286479, 0, 2.10065, -0.286479, 0, -2.10065, 1.90977, 0, -8.21662, -1.08924, 0, 0.445598, 1.08924, 0, -0.445598, 3.07809, 0, -12.6715, -0.643639, 0, -0.841682, 0.643639, 0, 0.841682, 6.86997, 0, -12.4894, 0.940704, 0, -0.69315, -0.940704, 0, 0.69315, 6.87448, 0, -8.54527, 1.08923, 0, 0.643639, -1.08923, 0, -0.643639, 3.49411, 0, -8.4886, 0.297062, 0, 1.68336, -0.297062, 0, -1.68336, 1.51368, 0, -12.7221, -0.396084, 0, 1.23777, 0.396084, 0, -1.23777, 1.46626, 0, -16.6627),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 9
+
+[sub_resource type="Curve3D" id="Curve3D_qns2b"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -9.94441, 0, -13.0072, -1.61001, 0, -0.534725, 1.61001, 0, 0.534725, -4.01251, 0, -13.9783, -0.0694584, 0, -1.27016, 0.0694584, 0, 1.27016, -1.32933, 0, -11.2639, 2.02176, 0, -0.110004, -2.02176, 0, 0.110004, -3.63811, 0, -7.92556, -0.0286889, 0, 1.24905, 0.0286889, 0, -1.24905, -7.10129, 0, -10.6711, -0.824474, 0, 0.963775, 0.824474, 0, -0.963775, -5.54524, 0, -14.4424, -0.0233788, 0, 0.919216, 0.0233788, 0, -0.919216, -3.4402, 0, -17.0177),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 7
+
+[sub_resource type="Curve3D" id="Curve3D_brav8"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8.40494, 0, -13.4167, 1.55999, 0, 0.0623999, -1.55999, 0, -0.0623999, 5.40976, 0, -14.7583, 0.935993, 0, -0.998392, -0.935993, 0, 0.998392, 1.97785, 0, -13.2919, -0.998392, 0, -0.998394, 0.998392, 0, 0.998394, 1.97785, 0, -9.04875, -0.592796, 0, 0.779995, 0.592796, 0, -0.779995, 6.93855, 0, -8.89277, 0.96719, 0, 0.779995, -0.96719, 0, -0.779995, 6.62655, 0, -13.0423, 0.779997, 0, 1.12319, -0.779997, 0, -1.12319, 3.31937, 0, -14.6959, 0, 0, 0, 0, 0, 0, 3.06977, 0, -17.3791),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
 
 [node name="Game" type="Node3D"]
 
@@ -42,7 +59,7 @@ shadow_enabled = true
 environment = SubResource("Environment_feb5d")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.403561, 0.914953, 0, -0.914953, 0.403561, 0, 13.8266, -2.23806)
+transform = Transform3D(1, 0, 0, 0, 0.100986, 0.994888, 0, -0.994888, 0.100986, 0, 18.2622, -9.7832)
 size = 24.2598
 far = 150.0
 
@@ -54,96 +71,226 @@ script = ExtResource("2_rq40f")
 curve = SubResource("Curve3D_u18c4")
 script = ExtResource("2_rq40f")
 
-[node name="PlayerShip" parent="." instance=ExtResource("2_ghh2v")]
+[node name="InRouteLeftSide" type="Path3D" parent="."]
+curve = SubResource("Curve3D_qns2b")
+script = ExtResource("2_rq40f")
 
-[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("left_subgroups", "left_paths", "right_subgroups", "right_paths")]
+[node name="InRouteRightSide" type="Path3D" parent="."]
+curve = SubResource("Curve3D_brav8")
+script = ExtResource("2_rq40f")
+
+[node name="PlayerShip" parent="." instance=ExtResource("2_ghh2v")]
+left_bound = -6.0
+right_bound = 6.0
+
+[node name="WaveSpawner" type="Node" parent="." node_paths=PackedStringArray("formation_order", "left_paths", "right_paths")]
 script = ExtResource("3_6gmqk")
 enemy_ship = ExtResource("4_mqimk")
-left_subgroups = [NodePath("SubGroup"), NodePath("SubGroup3")]
-left_paths = [NodePath("../InRouteBottomLeft")]
-right_subgroups = [NodePath("SubGroup2"), NodePath("SubGroup4")]
-right_paths = [NodePath("../InRouteBottomRight")]
+formation_order = [NodePath("Formation1"), NodePath("Formation2")]
+left_paths = [NodePath("../InRouteBottomLeft"), NodePath("../InRouteLeftSide")]
+right_paths = [NodePath("../InRouteBottomRight"), NodePath("../InRouteRightSide")]
 
-[node name="SubGroup" type="Node3D" parent="EnemySpawner"]
+[node name="Formation1" type="Node3D" parent="WaveSpawner"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -22.5)
+script = ExtResource("5_io1ng")
 
-[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -4)
+[node name="EnemyPosition3" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -5.5)
+script = ExtResource("6_vtjwi")
 
-[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -4)
+[node name="EnemyPosition4" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -5.5)
+script = ExtResource("6_vtjwi")
 
-[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -2.5)
+[node name="EnemyPosition15" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -5.5)
+script = ExtResource("6_vtjwi")
 
-[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -2.5)
+[node name="EnemyPosition16" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -5.5)
+script = ExtResource("6_vtjwi")
 
-[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, -1)
+[node name="EnemyPosition5" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -4)
+script = ExtResource("6_vtjwi")
+formation_row = 1
 
-[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, -1)
+[node name="EnemyPosition6" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -4)
+script = ExtResource("6_vtjwi")
+formation_row = 1
 
-[node name="SubGroup3" type="Node3D" parent="EnemySpawner"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.5, 0, -19.5)
+[node name="EnemyPosition7" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -2.5)
+script = ExtResource("6_vtjwi")
+formation_row = 2
 
-[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 1.5)
+[node name="EnemyPosition8" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -2.5)
+script = ExtResource("6_vtjwi")
+formation_row = 2
 
-[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 3)
+[node name="EnemyPosition17" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -1)
+script = ExtResource("6_vtjwi")
+formation_row = 3
 
-[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1, 0, 4.5)
+[node name="EnemyPosition18" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -1)
+script = ExtResource("6_vtjwi")
+formation_row = 3
 
-[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 1.5)
+[node name="EnemyPosition9" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 2.5)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 2
 
-[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 3)
+[node name="EnemyPosition10" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 2.5)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 2
 
-[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup3"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 4.5)
+[node name="EnemyPosition19" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 1)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 3
 
-[node name="SubGroup2" type="Node3D" parent="EnemySpawner"]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -23)
+[node name="EnemyPosition20" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 1)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 3
 
-[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 1.5)
+[node name="EnemyPosition11" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 4)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 1
 
-[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
+[node name="EnemyPosition12" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 4)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 1
 
-[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 3)
+[node name="EnemyPosition13" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 5.5)
+script = ExtResource("6_vtjwi")
+side = 1
 
-[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
+[node name="EnemyPosition14" type="Marker3D" parent="WaveSpawner/Formation1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 5.5)
+script = ExtResource("6_vtjwi")
+side = 1
 
-[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 4.5)
+[node name="Formation2" type="Node3D" parent="WaveSpawner"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.24537e-08, 0, -19.3)
+script = ExtResource("5_io1ng")
 
-[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup2"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
+[node name="EnemyPosition3" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -5.5)
+script = ExtResource("6_vtjwi")
 
-[node name="SubGroup4" type="Node3D" parent="EnemySpawner"]
-transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.5, 0, -20)
+[node name="EnemyPosition4" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -5.5)
+script = ExtResource("6_vtjwi")
 
-[node name="Marker3D3" type="Marker3D" parent="EnemySpawner/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 1.5)
+[node name="EnemyPosition5" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -4)
+script = ExtResource("6_vtjwi")
+formation_row = 1
 
-[node name="Marker3D4" type="Marker3D" parent="EnemySpawner/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 3)
+[node name="EnemyPosition6" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -4)
+script = ExtResource("6_vtjwi")
+formation_row = 1
 
-[node name="Marker3D5" type="Marker3D" parent="EnemySpawner/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0, 4.5)
+[node name="EnemyPosition7" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -2.5)
+script = ExtResource("6_vtjwi")
+formation_row = 2
 
-[node name="Marker3D13" type="Marker3D" parent="EnemySpawner/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 1.5)
+[node name="EnemyPosition8" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -2.5)
+script = ExtResource("6_vtjwi")
+formation_row = 2
 
-[node name="Marker3D14" type="Marker3D" parent="EnemySpawner/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 3)
+[node name="EnemyPosition15" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -1)
+script = ExtResource("6_vtjwi")
+formation_row = 3
 
-[node name="Marker3D15" type="Marker3D" parent="EnemySpawner/SubGroup4"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 4.5)
+[node name="EnemyPosition16" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -1)
+script = ExtResource("6_vtjwi")
+formation_row = 3
+
+[node name="EnemyPosition9" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 2.5)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 2
+
+[node name="EnemyPosition10" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 2.5)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 2
+
+[node name="EnemyPosition17" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 1)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 3
+
+[node name="EnemyPosition18" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 1)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 3
+
+[node name="EnemyPosition11" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 4)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 1
+
+[node name="EnemyPosition12" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 4)
+script = ExtResource("6_vtjwi")
+side = 1
+formation_row = 1
+
+[node name="EnemyPosition13" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 5.5)
+script = ExtResource("6_vtjwi")
+side = 1
+
+[node name="EnemyPosition14" type="Marker3D" parent="WaveSpawner/Formation2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 5.5)
+script = ExtResource("6_vtjwi")
+side = 1
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 75.0
+offset_bottom = 54.0
+
+[node name="WaveLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Wave #-1"
+script = ExtResource("7_8igea")
+
+[node name="ScoreLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Score: 0"
+
+[connection signal="new_wave" from="WaveSpawner" to="UI/VBoxContainer/WaveLabel" method="_on_new_wave"]
+[connection signal="formation_eliminated" from="WaveSpawner/Formation1" to="WaveSpawner" method="_on_formation_eliminated"]
+[connection signal="formation_eliminated" from="WaveSpawner/Formation2" to="WaveSpawner" method="_on_formation_eliminated"]

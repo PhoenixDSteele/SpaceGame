@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1lfmsjvg8cnn"]
+[gd_scene load_steps=5 format=3 uid="uid://c1lfmsjvg8cnn"]
 
 [ext_resource type="Script" path="res://core/scene_loader/scene_loader.gd" id="1_hqn37"]
 [ext_resource type="SystemFont" uid="uid://bswj6ny0fo5nx" path="res://assets/ui/game_font_karenFat.tres" id="2_0nfxq"]
 [ext_resource type="PackedScene" uid="uid://07hyio5gd0ve" path="res://scenes/main_menu.tscn" id="2_cvmfl"]
+[ext_resource type="PackedScene" uid="uid://b18bg8cf5h5yh" path="res://scenes/game.tscn" id="3_ulp4l"]
 
 [node name="SceneLoader" type="Node"]
 script = ExtResource("1_hqn37")
 main_menu = ExtResource("2_cvmfl")
+gameplay_loop = ExtResource("3_ulp4l")
 
 [node name="LoadCover" type="Control" parent="."]
 unique_name_in_owner = true

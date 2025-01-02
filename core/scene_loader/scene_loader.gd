@@ -19,13 +19,15 @@ func to_main_menu() -> void:
 func to_gameplay_loop() -> void:
 	next_scene = gameplay_loop
 	current_scene = gameplay_loop
-	scene_change()
+	#scene_change()
+	get_tree().change_scene_to_packed(gameplay_loop)
 
 func scene_change() -> void:
 	if timer.is_stopped():
 		load_cover.visible = true
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 		timer.start(scene_change_duration)
+		timer.paused = false
 	else:
 		return
 

@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://b18bg8cf5h5yh"]
+[gd_scene load_steps=16 format=3 uid="uid://b18bg8cf5h5yh"]
 
-[ext_resource type="PackedScene" uid="uid://cr7a4kxegodb6" path="res://entities/player_ship/player_ship.tscn" id="2_ghh2v"]
-[ext_resource type="Script" path="res://scripts/spawn_path.gd" id="2_rq40f"]
-[ext_resource type="Script" path="res://scripts/wave_spawner.gd" id="3_6gmqk"]
-[ext_resource type="PackedScene" uid="uid://kq0fr5sniqe4" path="res://entities/enemy_ship/enemy_ship.tscn" id="4_mqimk"]
-[ext_resource type="Script" path="res://scripts/formation.gd" id="5_io1ng"]
-[ext_resource type="Script" path="res://scripts/enemy_position.gd" id="6_vtjwi"]
-[ext_resource type="Script" path="res://wave_label.gd" id="7_8igea"]
+[ext_resource type="Script" path="res://scripts/enemy_waves/spawn_path.gd" id="1_h418x"]
+[ext_resource type="PackedScene" uid="uid://cr7a4kxegodb6" path="res://entities/player_ship/player_ship.tscn" id="2_os528"]
+[ext_resource type="Script" path="res://scripts/enemy_waves/wave_spawner.gd" id="3_xynl8"]
+[ext_resource type="PackedScene" uid="uid://kq0fr5sniqe4" path="res://entities/enemy_ship/enemy_ship.tscn" id="4_yl81q"]
+[ext_resource type="Script" path="res://scripts/enemy_waves/formation.gd" id="5_a4ugm"]
+[ext_resource type="Script" path="res://scripts/enemy_waves/enemy_position.gd" id="6_xr7q1"]
+[ext_resource type="Script" path="res://wave_label.gd" id="7_jdmqy"]
+[ext_resource type="PackedScene" uid="uid://craeh6ygtymjq" path="res://assets/models/floor/moon_ground.glb" id="8_4y1pt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80nbo"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -65,213 +66,213 @@ far = 150.0
 
 [node name="InRouteBottomLeft" type="Path3D" parent="."]
 curve = SubResource("Curve3D_mwb40")
-script = ExtResource("2_rq40f")
+script = ExtResource("1_h418x")
 
 [node name="InRouteBottomRight" type="Path3D" parent="."]
 curve = SubResource("Curve3D_u18c4")
-script = ExtResource("2_rq40f")
+script = ExtResource("1_h418x")
 
 [node name="InRouteLeftSide" type="Path3D" parent="."]
 curve = SubResource("Curve3D_qns2b")
-script = ExtResource("2_rq40f")
+script = ExtResource("1_h418x")
 
 [node name="InRouteRightSide" type="Path3D" parent="."]
 curve = SubResource("Curve3D_brav8")
-script = ExtResource("2_rq40f")
+script = ExtResource("1_h418x")
 
-[node name="PlayerShip" parent="." instance=ExtResource("2_ghh2v")]
+[node name="PlayerShip" parent="." instance=ExtResource("2_os528")]
 left_bound = -6.0
 right_bound = 6.0
 
 [node name="WaveSpawner" type="Node" parent="." node_paths=PackedStringArray("formation_order", "left_paths", "right_paths")]
-script = ExtResource("3_6gmqk")
-enemy_ship = ExtResource("4_mqimk")
+script = ExtResource("3_xynl8")
+enemy_ship = ExtResource("4_yl81q")
 formation_order = [NodePath("Formation1"), NodePath("Formation2")]
 left_paths = [NodePath("../InRouteBottomLeft"), NodePath("../InRouteLeftSide")]
 right_paths = [NodePath("../InRouteBottomRight"), NodePath("../InRouteRightSide")]
 
 [node name="Formation1" type="Node3D" parent="WaveSpawner"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -22.5)
-script = ExtResource("5_io1ng")
+script = ExtResource("5_a4ugm")
 
 [node name="EnemyPosition3" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 
 [node name="EnemyPosition4" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 
 [node name="EnemyPosition15" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 
 [node name="EnemyPosition16" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 
 [node name="EnemyPosition5" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 1
 
 [node name="EnemyPosition6" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 1
 
 [node name="EnemyPosition7" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 2
 
 [node name="EnemyPosition8" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 2
 
 [node name="EnemyPosition17" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 3
 
 [node name="EnemyPosition18" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, -1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 3
 
 [node name="EnemyPosition9" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 2
 
 [node name="EnemyPosition10" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 2
 
 [node name="EnemyPosition19" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 3
 
 [node name="EnemyPosition20" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 3
 
 [node name="EnemyPosition11" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 1
 
 [node name="EnemyPosition12" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 1
 
 [node name="EnemyPosition13" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 
 [node name="EnemyPosition14" type="Marker3D" parent="WaveSpawner/Formation1"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 
 [node name="Formation2" type="Node3D" parent="WaveSpawner"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.24537e-08, 0, -19.3)
-script = ExtResource("5_io1ng")
+script = ExtResource("5_a4ugm")
 
 [node name="EnemyPosition3" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 
 [node name="EnemyPosition4" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 
 [node name="EnemyPosition5" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 1
 
 [node name="EnemyPosition6" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 1
 
 [node name="EnemyPosition7" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 2
 
 [node name="EnemyPosition8" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 2
 
 [node name="EnemyPosition15" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, -1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 3
 
 [node name="EnemyPosition16" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, -1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 formation_row = 3
 
 [node name="EnemyPosition9" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 2
 
 [node name="EnemyPosition10" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 2.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 2
 
 [node name="EnemyPosition17" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 3
 
 [node name="EnemyPosition18" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 1)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 3
 
 [node name="EnemyPosition11" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 1
 
 [node name="EnemyPosition12" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 4)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 formation_row = 1
 
 [node name="EnemyPosition13" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.799999, 0, 5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 
 [node name="EnemyPosition14" type="Marker3D" parent="WaveSpawner/Formation2"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.700001, 0, 5.5)
-script = ExtResource("6_vtjwi")
+script = ExtResource("6_xr7q1")
 side = 1
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -285,12 +286,21 @@ offset_bottom = 54.0
 [node name="WaveLabel" type="Label" parent="UI/VBoxContainer"]
 layout_mode = 2
 text = "Wave #-1"
-script = ExtResource("7_8igea")
+script = ExtResource("7_jdmqy")
 
 [node name="ScoreLabel" type="Label" parent="UI/VBoxContainer"]
 layout_mode = 2
 text = "Score: 0"
 
+[node name="moon_ground" parent="." instance=ExtResource("8_4y1pt")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.42594, -11.1928)
+
+[node name="Cylinder" parent="moon_ground" index="0"]
+transform = Transform3D(7.15256e-07, -2, 0, 2, 7.15256e-07, 0, 0, 0, 2, -2.93493e-06, -8.20665, 0)
+sorting_use_aabb_center = false
+
 [connection signal="new_wave" from="WaveSpawner" to="UI/VBoxContainer/WaveLabel" method="_on_new_wave"]
 [connection signal="formation_eliminated" from="WaveSpawner/Formation1" to="WaveSpawner" method="_on_formation_eliminated"]
 [connection signal="formation_eliminated" from="WaveSpawner/Formation2" to="WaveSpawner" method="_on_formation_eliminated"]
+
+[editable path="moon_ground"]

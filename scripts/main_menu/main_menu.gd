@@ -18,6 +18,8 @@ func start_button_clicked() -> void:
 	clicked.play()
 	await get_tree().create_timer(0.5).timeout
 	print("GO TO GAME")
+	SceneLoader.to_gameplay_loop()
+	#get_tree().change_scene_to_packed()
 
 func exit_button_clicked() -> void:
 	button_start.visible = false

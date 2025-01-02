@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://e8jix811x3xy"]
+
+[ext_resource type="AudioStream" uid="uid://fy1qulonjll4" path="res://assets/audio/music/SpaceshipGame theme.mp3" id="1_vb4lq"]
+
+[node name="AudioManager" type="Node"]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_vb4lq")
+autoplay = true

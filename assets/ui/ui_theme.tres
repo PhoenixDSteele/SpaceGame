@@ -1,0 +1,32 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://dutoaetsiv3dn"]
+
+[ext_resource type="Texture2D" uid="uid://ceb7t4tvg0yiv" path="res://assets/ui/textures/button_highlight.png" id="1_06bv3"]
+[ext_resource type="Texture2D" uid="uid://b6c8egbymlbiv" path="res://assets/ui/textures/button_neutral.png" id="1_6himx"]
+[ext_resource type="SystemFont" uid="uid://bswj6ny0fo5nx" path="res://assets/ui/game_font_karenFat.tres" id="1_krdjb"]
+[ext_resource type="Texture2D" uid="uid://b8akxkt2bv5jl" path="res://assets/ui/textures/button_clicked.png" id="1_xpvg6"]
+[ext_resource type="Texture2D" uid="uid://hcuvf252q4y7" path="res://assets/ui/textures/panel_template.png" id="4_xylo2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n8qgi"]
+texture = ExtResource("1_06bv3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3mr5r"]
+texture = ExtResource("1_6himx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0bae8"]
+texture = ExtResource("1_xpvg6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_am2sx"]
+texture = ExtResource("4_xylo2")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 32, 32)
+
+[resource]
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_krdjb")
+Button/styles/hover = SubResource("StyleBoxTexture_n8qgi")
+Button/styles/normal = SubResource("StyleBoxTexture_3mr5r")
+Button/styles/pressed = SubResource("StyleBoxTexture_0bae8")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_am2sx")

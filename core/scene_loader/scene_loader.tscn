@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1lfmsjvg8cnn"]
+
+[ext_resource type="Script" path="res://core/scene_loader/scene_loader.gd" id="1_hqn37"]
+[ext_resource type="SystemFont" uid="uid://bswj6ny0fo5nx" path="res://assets/ui/game_font_karenFat.tres" id="2_0nfxq"]
+[ext_resource type="PackedScene" uid="uid://07hyio5gd0ve" path="res://scenes/main_menu.tscn" id="2_cvmfl"]
+
+[node name="SceneLoader" type="Node"]
+script = ExtResource("1_hqn37")
+main_menu = ExtResource("2_cvmfl")
+
+[node name="LoadCover" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="LoadCover"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.315103, 0.232268, 0.412235, 1)
+
+[node name="Label" type="Label" parent="LoadCover/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -11.5
+offset_right = 37.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_0nfxq")
+theme_override_font_sizes/font_size = 64
+text = "Loading..."
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
